@@ -1,7 +1,7 @@
-# Use uma imagem base com Node.js
+# Usar a imagem base Node.js para o frontend React
 FROM node:16
 
-# Definir o diretório de trabalho para o frontend
+# Definir o diretório de trabalho para o React
 WORKDIR /app
 
 # Copiar os arquivos de dependências (package.json e package-lock.json)
@@ -16,8 +16,8 @@ COPY . .
 # Construir o projeto React
 RUN npm run build
 
-# Expõe a porta 3000
+# Expor a porta 3000
 EXPOSE 3000
 
-# Comando para iniciar a aplicação React (em modo de produção)
+# Comando para iniciar a aplicação React
 CMD ["npm", "start"]
