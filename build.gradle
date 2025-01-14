@@ -3,9 +3,10 @@ buildscript {
         maven { url "https://repo.grails.org/grails/core" }
         mavenCentral()
     }
-    dependencies { // Not Published to Gradle Plugin Portal
+    dependencies {
         classpath "org.grails:grails-gradle-plugin:6.2.4"
         classpath "org.grails.plugins:hibernate5:8.1.0"
+        
     }
 }
 
@@ -17,32 +18,19 @@ plugins {
     id "com.bertramlabs.asset-pipeline" version "4.5.1"
     id "application"
     id "eclipse"
+    id "org.grails.plugins.db-migration" version "3.1.0" // Plugin DB Migration
 }
-
-// Not Published to Gradle Plugin Portal
-apply plugin: "org.grails.grails-web"
-apply plugin: "org.grails.grails-gsp"
-
-group = "teste.teleatendimento"
 
 repositories {
     mavenCentral()
     maven { url "https://repo.grails.org/grails/core/" }
 }
 
-configurations {
-    all {
-        resolutionStrategy.eachDependency { DependencyResolveDetails details->
-            if (details.requested.group == 'org.seleniumhq.selenium') {
-                details.useVersion('4.19.1')
-            }
-        }
-    }
-}
-
 dependencies {
+    
     profile "org.grails.profiles:web"
     implementation "org.grails:grails-core"
+    implementation "org.grails.plugins:liquibase:3.1.0" // Liquibase plugin
     implementation "org.grails:grails-logging"
     implementation "org.grails:grails-plugin-databinding"
     implementation "org.grails:grails-plugin-i18n"
@@ -77,6 +65,7 @@ dependencies {
     testRuntimeOnly "org.seleniumhq.selenium:selenium-chrome-driver:4.19.1"
     testRuntimeOnly "org.seleniumhq.selenium:selenium-firefox-driver:4.19.1"
     testRuntimeOnly "org.seleniumhq.selenium:selenium-safari-driver:4.19.1"
+    compile 'org.grails.plugins:db-migration:3.1.0'  // Dependência do db-migration
 }
 
 application {
@@ -94,11 +83,13 @@ tasks.withType(Test) {
     systemProperty 'webdriver.chrome.driver', "${System.getenv('CHROMEWEBDRIVER')}/chromedriver"
     systemProperty 'webdriver.gecko.driver', "${System.getenv('GECKOWEBDRIVER')}/geckodriver"
 }
+
 webdriverBinaries {
     chromedriver '122.0.6260.0'
     geckodriver '0.33.0'
     edgedriver '110.0.1587.57'
 }
+
 assets {
     minifyJs = true
     minifyCss = true

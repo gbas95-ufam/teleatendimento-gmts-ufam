@@ -19,3 +19,9 @@ spring:
     hikari:
       poolName: HikariCP
       maximumPoolSize: 10
+      
+grails:
+  plugin:
+    liquibase:
+      changelog: classpath:db/changelog/db.changelog-master.xml  # Caminho do changelog
+      runOnStart: true  # Execute migrações automaticamente ao iniciar
