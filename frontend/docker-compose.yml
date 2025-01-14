@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  # Serviço para o backend Grails
+  grails-backend:
+    build: ./backend
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3307/mydb
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+    depends_on:
+      - mysql-db
+    networks:
+      - app-network
+
+  # Serviço para o frontend React
+  react-frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - grails-backend
+    networks:
+      - app-network
+
+  # Serviço para o MySQL
+  mysql-db:
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: mydb
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mysql-data:
+    driver: local
