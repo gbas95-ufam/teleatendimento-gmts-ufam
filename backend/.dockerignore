@@ -1,0 +1,10 @@
+.gradle/
+build/
+out/
+*.jar
+*.bat
+*.log
+*.tmp
+.DS_Store
+
+
