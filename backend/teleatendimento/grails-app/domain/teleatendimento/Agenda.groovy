@@ -1,10 +1,11 @@
 package teleatendimento
+import java.time.*
 
 class Agenda {
 	Long id
 	Profissional profissional
-	Date data
-	Time horario
+	LocalDate data
+	LocalTime horario
 	String status
 
 	static belongsTo = [profissional: Profissional]  // Relacionamento com Profissional

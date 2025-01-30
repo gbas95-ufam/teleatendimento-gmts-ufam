@@ -1,0 +1,40 @@
+grails:
+  server:
+    port: 8080
+
+
+
+
+dataSource:
+    pooled: true
+    jmxExport: true
+    driverClassName: com.mysql.cj.jdbc.Driver
+    username: teleatendimento  # Usuário definido no docker-compose
+    password: teleatendimento123  # Senha definida no docker-compose
+    url: jdbc:mysql://localhost:3306/teleatendimentoDB?useSSL=false&serverTimezone=UTC
+    dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+
+environments:
+    development:
+        dataSource:
+            dbCreate: update  # Opções: create, create-drop, update, validate
+            logSql: true
+            formatSql: true
+
+
+hibernate:
+  cache:
+    queries: false
+
+spring:
+  datasource:
+    hikari:
+      poolName: HikariCP
+      maximumPoolSize: 10
+      
+grails:
+  plugin:
+    liquibase:
+      changelog: classpath:db/changelog/db.changelog-master.xml  # Caminho do changelog
+      runOnStart: true  # Execute migrações automaticamente ao iniciar
+
