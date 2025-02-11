@@ -1,0 +1,19 @@
+version: '3.8'
+services:
+  db:
+    image: mysql:8.0
+    container_name: my-mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'teleatendimentoDB'
+      MYSQL_USER: 'teleatendimento'
+      MYSQL_PASSWORD: 'teleatendimento123'
+      MYSQL_ROOT_PASSWORD: 'teleatendimento123'
+    ports:
+      - "3306:3306"
+    volumes:
+      - my-db:/var/lib/mysql
+    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+
+volumes:
+  my-db:

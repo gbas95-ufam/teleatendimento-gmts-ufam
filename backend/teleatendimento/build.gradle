@@ -54,6 +54,10 @@ dependencies {
     testImplementation "io.micronaut:micronaut-inject-groovy"
     testImplementation "org.grails:grails-gorm-testing-support"
     testImplementation "org.spockframework:spock-core"
+    testImplementation "org.grails:grails-core"
+    testImplementation "org.grails:grails-testing-support"  // Assegure-se que a versão corresponde à sua versão do Grails
+    testImplementation "org.spockframework:spock-core:2.0-groovy-3.0"
+    testImplementation "org.grails:grails-web-testing-support"
 }
 
 application {
