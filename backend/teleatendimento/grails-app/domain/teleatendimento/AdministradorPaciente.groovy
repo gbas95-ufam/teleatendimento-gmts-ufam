@@ -1,6 +1,6 @@
 package teleatendimento
 
-class AdministradorPaciente {
+class AdministradorPaciente implements Serializable{
 	Administrador administrador
 	Paciente paciente
 

@@ -1,8 +1,8 @@
 info:
   app:
-    name: '@info.app.name@'
-    version: '@info.app.version@'
-    grailsVersion: '@info.app.grailsVersion@'
+    name: "@info.app.name@"
+    version: "@info.app.version@"
+    grailsVersion: "@info.app.grailsVersion@"
 grails:
   codegen:
     defaultPackage: teleatendimento
@@ -10,18 +10,18 @@ grails:
 dataSource:
   driverClassName: org.h2.Driver
   username: sa
-  password: ''
+  password: ""
   pooled: true
   jmxExport: true
 environments:
   development:
     dataSource:
       dbCreate: create-drop
-      url: jdbc:h2:mem:devDb;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
+      url: jdbc:h2:mem:devDb
   test:
     dataSource:
       dbCreate: update
-      url: jdbc:h2:mem:testDb;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
+      url: jdbc:h2:mem:testDb
   production:
     dataSource:
       dbCreate: none
@@ -49,3 +49,15 @@ hibernate:
     queries: false
     use_second_level_cache: false
     use_query_cache: false
+  hbm2ddl:
+    auto: update
+    dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+spring:
+  h2:
+    console:
+      enabled: true
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/gorm
+    username: root
+    password: ""

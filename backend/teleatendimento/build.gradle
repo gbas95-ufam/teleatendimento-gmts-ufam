@@ -28,6 +28,8 @@ repositories {
 }
 
 configurations {
+    integrationTestImplementation.extendsFrom testImplementation
+    integrationTestRuntimeOnly.extendsFrom testRuntimeOnly
     all {
     }
 }
@@ -47,7 +49,7 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-autoconfigure"
     implementation "org.springframework.boot:spring-boot-starter-logging"
     implementation "org.springframework.boot:spring-boot-starter-validation"
-    compileOnly "io.micronaut:micronaut-inject-groovy"
+    //compileOnly "io.micronaut:micronaut-inject-groovy"
     console "org.grails:grails-console"
     runtimeOnly "com.h2database:h2"
     runtimeOnly "org.apache.tomcat:tomcat-jdbc"
@@ -58,6 +60,25 @@ dependencies {
     testImplementation "org.grails:grails-testing-support"  // Assegure-se que a versão corresponde à sua versão do Grails
     testImplementation "org.spockframework:spock-core:2.0-groovy-3.0"
     testImplementation "org.grails:grails-web-testing-support"
+    //spring
+    implementation "org.springframework.boot:spring-boot-starter-web"
+    //hibernate
+    //compile "org.grails.plugins:hibernate5:8.1.1" deprecated
+    //compile "org.hibernate:hibernate-ehcache"
+
+    //hibernate + spring boot
+    //compile("org.grails:gorm-hibernate5-spring-boot:8.1.1")
+    //compile "org.hibernate:hibernate-core"
+    //compile "org.hibernate:hibernate-ehcache"
+    //runtime "com.h2database:h2:1.4.192"
+
+    // for MySQL
+    runtimeOnly "mysql:mysql-connector-java"
+
+    // for connection pooling
+    //runtime "org.apache.tomcat:tomcat-jdbc:8.5.0" deu erro
+    //runtime "org.apache.tomcat.embed:tomcat-embed-logging-log4j:8.5.0"
+
 }
 
 application {
@@ -71,3 +92,28 @@ java {
 tasks.withType(Test) {
     useJUnitPlatform()
 }
+
+sourceSets {
+    integrationTest {
+        groovy {
+            srcDir 'src/integration-test/groovy'
+        }
+        resources {
+            srcDir 'src/integration-test/resources'
+        }
+    }
+}
+
+
+
+tasks.named('integrationTest') {
+    // configurações customizadas
+    description = 'Executa os testes de integração.'
+    group = 'verification'
+    testClassesDirs = sourceSets.integrationTest.output.classesDirs
+    classpath = sourceSets.integrationTest.runtimeClasspath
+    shouldRunAfter test
+}
+
+
+check.dependsOn integrationTest

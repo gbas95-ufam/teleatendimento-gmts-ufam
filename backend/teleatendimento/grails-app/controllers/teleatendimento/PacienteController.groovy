@@ -1,18 +1,27 @@
 package teleatendimento
+import org.springframework.transaction.annotation.Transactional
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RestController
+import org.springframework.http.HttpStatus
 
+@RestController
 class PacienteController {
 
     PacienteService pacienteService
 
-    def list() {
+    @RequestMapping("/pacientes")
+    @Transactional(readOnly = true)
+    public List<String> list() {
         respond pacienteService.findAll()
     }
 
+    @Transactional(readOnly = true)
     def show(Long id) {
         Paciente paciente = pacienteService.findById(id)
         respond paciente != null ? paciente : [status: NOT_FOUND]
     }
 
+    @Transactional
     def save() {
         Paciente paciente = new Paciente(params)
         if (pacienteService.save(paciente)) {
@@ -22,6 +31,7 @@ class PacienteController {
         }
     }
 
+    @Transactional
     def update(Long id) {
         Paciente existingPaciente = pacienteService.findById(id)
         if (existingPaciente) {
@@ -36,6 +46,7 @@ class PacienteController {
         }
     }
 
+    @Transactional
     def delete(Long id) {
         if (pacienteService.delete(id)) {
             render status: NO_CONTENT

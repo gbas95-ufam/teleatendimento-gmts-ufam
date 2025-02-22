@@ -1,6 +1,6 @@
 package teleatendimento
 
-class AdministradorAgenda {
+class AdministradorAgenda implements Serializable {
 	Administrador administrador
 	Agenda agenda
 

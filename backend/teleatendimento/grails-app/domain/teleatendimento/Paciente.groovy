@@ -1,5 +1,9 @@
 package teleatendimento
+import grails.persistence.*
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 
+@Entity
+@JsonIgnoreProperties(['dirtyPropertyNames', 'errors', 'dirty', 'attached', 'version'])
 class Paciente {
 	Long id
 	String nome

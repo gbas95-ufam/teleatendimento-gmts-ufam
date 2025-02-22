@@ -1,6 +1,6 @@
 package teleatendimento
 
-class AdministradorProfissional {
+class AdministradorProfissional implements Serializable{
 	Administrador administrador
 	Profissional profissional
 
