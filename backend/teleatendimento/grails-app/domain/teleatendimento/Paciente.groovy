@@ -5,15 +5,15 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 @Entity
 @JsonIgnoreProperties(['dirtyPropertyNames', 'errors', 'dirty', 'attached', 'version'])
 class Paciente {
-	Long id
+	// Long id
 	String nome
 	Integer idade
 	String sexo
 	String problemaSaude
 	String contato
-	Localidade localidade
+	// Localidade localidade
 
-	static belongsTo = [localidade: Localidade]  // Relacionamento com Localidade
+	// static belongsTo = [localidade: Localidade]  // Relacionamento com Localidade
 
 	static constraints = {
     	nome nullable: false, maxSize: 255
