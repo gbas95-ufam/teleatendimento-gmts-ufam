@@ -24,7 +24,7 @@ class PacienteController {
     @Transactional
     def save() {
         Paciente paciente = new Paciente(params)
-        render "Paciente criado com os parametros: ${params}"
+        render "Paciente criado com os parametros: ${params}\n"
         if (pacienteService.save(paciente)) {
             // respond paciente, [status: CREATED]
             render status: CREATED, text: "Paciente cadastrado"
@@ -35,20 +35,17 @@ class PacienteController {
 
     @Transactional
     def update(Long id) {
-        Paciente existingPaciente = pacienteService.findById(id)
-        render "Antes do update: ${existingPaciente.properties}"
-        if (existingPaciente) {
-            existingPaciente.properties = params
-            render "Depois do update: ${existingPaciente.properties}"
-            if (pacienteService.save(existingPaciente)) {
-                // respond existingPaciente
-                render status: CREATED, text: "Paciente atualizado"
-            } else {
-                render status: BAD_REQUEST, text: "Invalid Paciente data"
-            }
-        } else {
-            render status: NOT_FOUND, text: "No Paciente found with id ${id}"
+        def paciente = pacienteService.update(id, params)
+
+        if(paciente.erro404){
+            render status: NOT_FOUND, paciente.erro404
+        } else if(paciente.erro){
+            render paciente.erro
+        }else{
+            render paciente.sucesso
         }
+
+
     }
 
     @Transactional

@@ -36,6 +36,26 @@ class PacienteService {
         return false
     }
 
+    def update(Long id, Map<String, Object>updates){
+        def paciente = Paciente.get(id)
+
+        if(!paciente){ //Checa se o retorno foi nulo ou não
+            return [erro404: "Paciente com id: ${id} não encontrado"]
+        }
+
+        updates.each { key, value
+            if(paciente.hasProperty(key)){ // Garante que somente propriedades validas(atributos) serão atualizados
+                paciente[key] = value
+            }
+        }
+ 
+        if(!paciente.save(flush: true)){ // Checa se o save foi possível no banco de dados
+            return [erro: "Erro ao atualizar o paciente. \nErros: ${paciente.erros}"]
+        }
+
+        return [sucesso: "Paciente atualizado com sucesso\n"]
+    }
+
     def Paciente findById(Long id) {
         return Paciente.get(id)
     }
